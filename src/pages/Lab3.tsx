@@ -4,17 +4,17 @@ import { Form, Input, Button, Select, Divider } from "antd";
 export default function Lab3() {
   const [data, setData] = useState<any>(null);
 
-  // ===== Bài 1 =====
+  
   const onLogin = (values: any) => {
     console.log("Login:", values);
   };
 
-  // ===== Bài 2 =====
+  
   const onRegister = (values: any) => {
     console.log("Register:", values);
   };
 
-  // ===== Bài 3 =====
+  
   const onProduct = (values: any) => {
     console.log("Product:", values);
   };
@@ -27,8 +27,8 @@ export default function Lab3() {
   return (
     <div style={{ maxWidth: 600, margin: "auto" }}>
       
-      {/* ===== BÀI 1 ===== */}
-      <h2>Bài 1 - Login</h2>
+    
+    
       <Form layout="vertical" onFinish={onLogin}>
         <Form.Item
           label="Email"
@@ -56,8 +56,8 @@ export default function Lab3() {
 
       <Divider />
 
-      {/* ===== BÀI 2 ===== */}
-      <h2>Bài 2 - Register</h2>
+      
+     
       <Form layout="vertical" onFinish={onRegister}>
         <Form.Item label="Name" name="name">
           <Input />
@@ -115,8 +115,8 @@ export default function Lab3() {
 
       <Divider />
 
-      {/* ===== BÀI 3 ===== */}
-      <h2>Bài 3 - Product</h2>
+      
+   
       <Form layout="vertical" onFinish={onProduct}>
         <Form.Item label="Tên sản phẩm" name="name">
           <Input />
@@ -141,8 +141,8 @@ export default function Lab3() {
 
       <Divider />
 
-      {/* ===== BÀI 4 ===== */}
-      <h2>Bài 4 - Advanced</h2>
+      
+      
       <Form layout="vertical" onFinish={onAdvanced}>
         <Form.Item label="Title" name="title">
           <Input />
@@ -174,7 +174,7 @@ export default function Lab3() {
         </Button>
       </Form>
 
-      {/* Hiển thị dữ liệu */}
+      
       {data && (
         <div style={{ marginTop: 20 }}>
           <h3>Dữ liệu đã nhập:</h3>
