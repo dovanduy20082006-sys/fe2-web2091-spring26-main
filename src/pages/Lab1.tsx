@@ -1,56 +1,10 @@
-import { Layout, Form, Input, Button, Table, Modal, Popconfirm } from "antd";
-import { useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { Button, Layout, Input, Form, Table, Modal } from "antd";
 
 const { Header, Sider, Content } = Layout;
 
-function Lab1() {
-
-  const [open, setOpen] = useState(false);
-  const [editingUser, setEditingUser] = useState<any>(null);
-
-  const [users, setUsers] = useState([
-    {
-      key: 1,
-      name: "Nguyen Van A",
-      email: "a@gmail.com",
-      role: "Admin",
-    },
-  ]);
-
-  
-  const onFinish = (values: any) => {
-    setUsers([...users, { key: Date.now(), ...values, role: "User" }]);
-  };
-
-  
-  const addUser = (values: any) => {
-    setUsers([...users, { key: Date.now(), ...values }]);
-    setOpen(false);
-  };
-
-  
-  const deleteUser = (key: number) => {
-    const newUsers = users.filter((user) => user.key !== key);
-    setUsers(newUsers);
-  };
-
-  
-  const editUser = (record: any) => {
-    setEditingUser(record);
-    setOpen(true);
-  };
-
- 
-  const updateUser = (values: any) => {
-    const newUsers = users.map((user) =>
-      user.key === editingUser.key ? { ...user, ...values } : user
-    );
-
-    setUsers(newUsers);
-    setEditingUser(null);
-    setOpen(false);
-  };
-
+function Dashboard() {
   const columns = [
     {
       title: "Name",
@@ -64,101 +18,90 @@ function Lab1() {
       title: "Role",
       dataIndex: "role",
     },
-    {
-      title: "Action",
-      render: (_: any, record: any) => (
-        <>
-          <Button
-            type="primary"
-            style={{ marginRight: 8 }}
-            onClick={() => editUser(record)}
-          >
-            Edit
-          </Button>
+  ];
 
-          <Popconfirm
-            title="Delete this user?"
-            onConfirm={() => deleteUser(record.key)}
-          >
-            <Button danger>Delete</Button>
-          </Popconfirm>
-        </>
-      ),
+  const data = [
+    {
+      key: 1,
+      name: "Nguyễn Văn A",
+      email: "a@gmail.com",
+      role: "Admin",
     },
   ];
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider style={{ color: "white", padding: 20 }}>Sidebar</Sider>
+    <>
+      <Toaster />
 
-      <Layout>
-        <Header style={{ color: "white" }}>Dashboard</Header>
+      <Layout style={{ minHeight: "100vh" }}>
 
-        <Content style={{ padding: 20 }}>
-          <h3>Register</h3>
+        <Sider>
+          <h3 style={{ color: "white", padding: 20 }}>Menu</h3>
+          <Link to="/" style={{ color: "white", padding: 20, display: "block" }}>
+            Dashboard
+          </Link>
+        </Sider>
 
-          <Form onFinish={onFinish} style={{ maxWidth: 300 }}>
-            <Form.Item name="name" rules={[{ required: true }]}>
-              <Input placeholder="Name" />
-            </Form.Item>
+        <Layout>
 
-            <Form.Item name="email" rules={[{ required: true }]}>
-              <Input placeholder="Email" />
-            </Form.Item>
+          <Header style={{ background: "#fff" }}>
+            <h2>Dashboard</h2>
+          </Header>
 
-            <Form.Item name="password" rules={[{ required: true }]}>
-              <Input.Password placeholder="Password" />
-            </Form.Item>
+          <Content style={{ padding: 20 }}>
 
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form>
+            <h2>Form đăng ký</h2>
 
-          <br />
-
-          <Button type="primary" onClick={() => setOpen(true)}>
-            Add User
-          </Button>
-
-          <br />
-          <br />
-
-          <Table columns={columns} dataSource={users} />
-
-          <Modal
-            open={open}
-            footer={null}
-            onCancel={() => {
-              setOpen(false);
-              setEditingUser(null);
-            }}
-          >
-            <Form
-              onFinish={editingUser ? updateUser : addUser}
-              initialValues={editingUser}
-            >
-              <Form.Item name="name" rules={[{ required: true }]}>
-                <Input placeholder="Name" />
+            <Form layout="vertical">
+              <Form.Item label="Name">
+                <Input />
               </Form.Item>
 
-              <Form.Item name="email" rules={[{ required: true }]}>
-                <Input placeholder="Email" />
+              <Form.Item label="Email">
+                <Input />
               </Form.Item>
 
-              <Form.Item name="role" rules={[{ required: true }]}>
-                <Input placeholder="Role" />
+              <Form.Item label="Password">
+                <Input.Password />
               </Form.Item>
 
-              <Button type="primary" htmlType="submit">
-                {editingUser ? "Update" : "Add"}
-              </Button>
+              <Button type="primary">Submit</Button>
             </Form>
-          </Modal>
-        </Content>
+
+            <br />
+
+            <Button type="primary">
+              Thêm User
+            </Button>
+
+            <br />
+            <br />
+
+            <Table columns={columns} dataSource={data} />
+
+            <Modal title="Thêm User" open={false} footer={null}>
+              <Form layout="vertical">
+                <Form.Item label="Name">
+                  <Input />
+                </Form.Item>
+
+                <Form.Item label="Email">
+                  <Input />
+                </Form.Item>
+
+                <Form.Item label="Role">
+                  <Input />
+                </Form.Item>
+
+                <Button type="primary">Add</Button>
+              </Form>
+            </Modal>
+
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </>
   );
 }
 
-export default Lab1;
+export default Dashboard;

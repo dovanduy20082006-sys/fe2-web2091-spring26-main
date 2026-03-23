@@ -1,51 +1,18 @@
 import { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { Image, InputNumber, Layout, Select } from "antd";
-import { Form, Input, Button } from "antd";
-import { Table } from "antd";
-import StoryForm from "./pages/Lab4";
-import { StoryList } from "./pages/Lab5";
-
-const { Header, Content, Footer } = Layout;
+import { Button, Layout, Input, Form } from "antd";
+import { Route, Routes } from "react-router-dom";
+import Lab1 from "./pages/lab1";
+import Lab2 from "./pages/lab2";
+import Lab3 from "./pages/lab3";
+import Lab4 from "./pages/lab4";
+import Lab5 from "./pages/lab5";
+import Lab6 from "./pages/lab6";
+// const { Header, Content, Footer } = Layout;
 function App() {
-  //
-  const onFinish = (values: any) => {
-    console.log("onFinish");
-
-    console.log(values);
-  };
-
-  const columns = [
-    { title: "Ho va ten", dataIndex: "name" },
-    { title: "Do tuoi", dataIndex: "age" },
-    { title: "Mon hoc", dataIndex: "subject" },
-    {
-      title: "Hinh anh",
-      dataIndex: "image",
-      render: (image: string) => (
-        <Image src={image} alt="hinh anh" width={100} height={100} />
-      ),
-    },
-  ];
-  const data = [
-    {
-      key: 1,
-      name: "John",
-      age: 25,
-      subject: "Math",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ7PetZoiMvh8-TEPna1ga9r6kDQDENKuWQFfXT-0&usqp=CAE&s",
-    },
-    {
-      key: 2,
-      name: "Anna",
-      age: 30,
-      subject: "Science",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ7PetZoiMvh8-TEPna1ga9r6kDQDENKuWQFfXT-0&usqp=CAE&s",
-    },
-  ];
-
+  // const onFinish = (values: any) => {
+  //   console.log(values);
+  // };
   return (
     <>
       <nav className="bg-blue-600 text-white shadow">
@@ -55,7 +22,7 @@ function App() {
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="#" className="hover:text-gray-200">
+            <Link to="/" className="hover:text-gray-200">
               Trang chủ
             </Link>
             <Link to="/list" className="hover:text-gray-200">
@@ -77,52 +44,39 @@ function App() {
         </div>
       </nav>
 
-      {/* MAIN CONTENT */}
       <div className="max-w-6xl mx-auto mt-10 px-4 text-center">
-        <h1 className="text-4xl font-bold mb-4">Chào mừng đến với WEB2091</h1>
-        <Layout>
+        <div className="mb-2">
+          <Link to="/lab1">
+            <Button className="mr-1" type="primary">Lab1</Button>
+          </Link>
+
+          <Link to="/lab2">
+            <Button className="mr-1" type="default">Lab2</Button>
+          </Link>
+
+          <Link to="/lab3">
+            <Button className="mr-1" type="dashed">Lab3</Button>
+          </Link>
+
+          <Link to="/lab4">
+            <Button className="mr-1" type="link">Lab4</Button>
+          </Link>
+
+          <Link to="/lab5">
+            <Button type="text">Lab5</Button>
+          </Link>
+
+          <Link to="/lab6">
+            <Button type="text">Lab6</Button>
+          </Link>
+        </div>
+
+        {/* <Layout className="mt-2">
           <Header style={{ color: "white" }}>Header</Header>
           <Content style={{ padding: 20 }}>
-            <StoryList />
-            {/* <StoryForm /> */}
-            {/* <Form layout="vertical" onFinish={onFinish}>
-              <Form.Item
-                label="Username"
-                name="username"
-                rules={[
-                  { required: true, message: "Please input your username!" },
-                  { min: 4, message: "Username must be at least 4 characters" },
-                ]}
-              >
-                <Input placeholder="username" />
-              </Form.Item>
-              <Form.Item label="Password" name="password">
-                <Input.Password placeholder="password" />
-              </Form.Item>
-              <Form.Item label="Password" name="password">
-                <Input.TextArea placeholder="password" />
-              </Form.Item>
-              <Form.Item
-                label="Price"
-                name="price"
-                rules={[
-                  { required: true, message: "Please input the price!" },
-                  {
-                    min: 1,
-                    message: "Price must be a positive number",
-                    type: "number",
-                  },
-                ]}
-              >
-                <InputNumber type="number" placeholder="price" />
-              </Form.Item>
-              <Form.Item label="Category" name="category">
-                <Select
-                  options={[
-                    { value: 1, label: "Option 1" },
-                    { value: 2, label: "Option 2" },
-                  ]}
-                />
+          <Form onFinish={onFinish}>
+              <Form.Item label="Username" name="username">
+                <Input />
               </Form.Item>
               <Form.Item>
                 <Button htmlType="submit" type="primary">
@@ -130,15 +84,18 @@ function App() {
                 </Button>
               </Form.Item>
             </Form>
-            <Table
-              columns={columns}
-              dataSource={data}
-              pagination={{ pageSize: 1 }}
-              // loading={true}
-            /> */}
           </Content>
           <Footer>Footer</Footer>
-        </Layout>
+        </Layout> */}
+
+        <Routes>
+          <Route path="/lab1" element={<Lab1/>}></Route>
+          <Route path="/lab2" element={<Lab2/>}></Route>
+          <Route path="/lab3" element={<Lab3/>}></Route>
+          <Route path="/lab4" element={<Lab4/>}></Route>
+          <Route path="/lab5" element={<Lab5/>}></Route>
+          <Route path="/lab6/:id" element={<Lab6 />} />
+        </Routes>
       </div>
 
       <Toaster />

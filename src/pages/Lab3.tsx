@@ -1,186 +1,205 @@
+import { Form, Input, Button, Select } from "antd";
 import { useState } from "react";
-import { Form, Input, Button, Select, Divider } from "antd";
 
-export default function Lab3() {
-  const [data, setData] = useState<any>(null);
-
-  
-  const onLogin = (values: any) => {
-    console.log("Login:", values);
-  };
-
-  
-  const onRegister = (values: any) => {
-    console.log("Register:", values);
-  };
-
-  
-  const onProduct = (values: any) => {
-    console.log("Product:", values);
-  };
-
-  // ===== Bài 4 =====
-  const onAdvanced = (values: any) => {
-    setData(values);
+function Bai1() {
+  const onFinish = (values: any) => {
+    console.log("Login data:", values);
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: "auto" }}>
-      
-    
-    
-      <Form layout="vertical" onFinish={onLogin}>
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            { required: true, message: "Email bắt buộc!" },
-            { type: "email", message: "Email không hợp lệ!" },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+    <Form layout="vertical" onFinish={onFinish} style={{ maxWidth: 400 }}>
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[
+          { required: true, message: "Vui lòng nhập email" },
+          { type: "email", message: "Email không hợp lệ" },
+        ]}
+      >
+        <Input />
+      </Form.Item>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Password bắt buộc!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: "Vui lòng nhập password" }]}
+      >
+        <Input.Password />
+      </Form.Item>
 
-        <Button htmlType="submit" type="primary">
-          Login
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Đăng nhập
         </Button>
-      </Form>
+      </Form.Item>
+    </Form>
+  );
+}
 
-      <Divider />
+function Bai2() {
+  const onFinish = (values: any) => {
+    console.log("Register data:", values);
+  };
+  return (
+    <Form layout="vertical" onFinish={onFinish} style={{ maxWidth: 500 }}>
+      <Form.Item label="Họ và tên" name="name">
+        <Input />
+      </Form.Item>
 
-      
-     
-      <Form layout="vertical" onFinish={onRegister}>
-        <Form.Item label="Name" name="name">
-          <Input />
-        </Form.Item>
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[
+          { required: true, message: "Vui lòng nhập email" },
+          { type: "email", message: "Email chưa đúng định dạng" },
+        ]}
+      >
+        <Input />
+      </Form.Item>
 
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            { required: true, message: "Email bắt buộc!" },
-            { type: "email", message: "Email không hợp lệ!" },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+      <Form.Item label="Số điện thoại" name="phone">
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Mật khẩu"
+        name="password"
+        rules={[
+          { required: true, message: "Vui lòng nhập mật khẩu" },
+          { min: 6, message: "Password có ít nhất 6 ký tự" },
+        ]}
+      >
+        <Input.Password />
+      </Form.Item>
 
-        <Form.Item label="Phone" name="phone">
-          <Input />
-        </Form.Item>
+      <Form.Item
+        label="Nhập lại mật khẩu"
+        name="confirmPass"
+        dependencies={["password"]}
+        rules={[
+          { required: true, message: "Vui lòng nhập lại mật khẩu" },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue("password") === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error("Mật khẩu nhập lại không khớp"));
+            },
+          }),
+        ]}
+      >
+        <Input.Password />
+      </Form.Item>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            { required: true, message: "Password bắt buộc!" },
-            { min: 6, message: "Tối thiểu 6 ký tự!" },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          label="Confirm Password"
-          name="confirm"
-          dependencies={["password"]}
-          rules={[
-            { required: true, message: "Xác nhận password!" },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject("Không trùng password!");
-              },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Button htmlType="submit" type="primary">
-          Register
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Đăng ký
         </Button>
-      </Form>
+      </Form.Item>
+    </Form>
+  );
+}
 
-      <Divider />
+function Bai3() {
+  const onFinish = (values: any) => {
+    console.log("Product data:", values);
+  };
 
-      
-   
-      <Form layout="vertical" onFinish={onProduct}>
-        <Form.Item label="Tên sản phẩm" name="name">
-          <Input />
-        </Form.Item>
+  return (
+    <Form layout="vertical" onFinish={onFinish} style={{ maxWidth: 500 }}>
+      <Form.Item label="Tên sản phẩm" name="name">
+        <Input />
+      </Form.Item>
 
-        <Form.Item label="Giá" name="price">
-          <Input type="number" />
-        </Form.Item>
+      <Form.Item label="Giá" name="price">
+        <Input />
+      </Form.Item>
 
-        <Form.Item label="Số lượng" name="quantity">
-          <Input type="number" />
-        </Form.Item>
+      <Form.Item label="Số lượng" name="quantity">
+        <Input />
+      </Form.Item>
 
-        <Form.Item label="Mô tả" name="description">
-          <Input.TextArea />
-        </Form.Item>
+      <Form.Item label="Mô tả" name="description">
+        <Input />
+      </Form.Item>
 
-        <Button htmlType="submit" type="primary">
-          Submit
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Thêm sản phẩm
         </Button>
-      </Form>
+      </Form.Item>
+    </Form>
+  );
+}
 
-      <Divider />
+function Bai4() {
+  const [blog, setBlog] = useState<any>(null);
 
-      
-      
-      <Form layout="vertical" onFinish={onAdvanced}>
-        <Form.Item label="Title" name="title">
-          <Input />
-        </Form.Item>
+  const onFinish = (values: any) => {
+    setBlog(values);
+  };
 
-        <Form.Item label="Category" name="category">
-          <Select
-            options={[
-              { label: "Tech", value: "tech" },
-              { label: "Life", value: "life" },
-            ]}
-          />
-        </Form.Item>
+  return (
+    <Form layout="vertical" onFinish={onFinish} style={{ maxWidth: 500 }}>
+      {JSON.stringify(blog)}
 
-        <Form.Item label="Slug" name="slug">
-          <Input />
-        </Form.Item>
+      <Form.Item label="Tên bài viết" name="title">
+        <Input />
+      </Form.Item>
 
-        <Form.Item label="Content" name="content">
-          <Input.TextArea />
-        </Form.Item>
+      <Form.Item label="Tác giả" name="slug">
+        <Input />
+      </Form.Item>
 
-        <Form.Item label="Image URL" name="image">
-          <Input />
-        </Form.Item>
+      <Form.Item label="Danh mục" name="category">
+        <Select
+          options={[
+            { value: "1", label: "Phim ma" },
+            { value: "2", label: "Kinh dị" },
+          ]}
+        />
+      </Form.Item>
 
-        <Button htmlType="submit" type="primary">
-          Submit
+      <Form.Item label="Nội dung" name="content">
+        <Input.TextArea rows={4} />
+      </Form.Item>
+
+      <Form.Item label="Ảnh bìa" name="image">
+        <Input />
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Đăng bài
         </Button>
-      </Form>
+      </Form.Item>
+    </Form>
+  );
+}
 
-      
-      {data && (
-        <div style={{ marginTop: 20 }}>
-          <h3>Dữ liệu đã nhập:</h3>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
-      )}
+function Lab3() {
+  return (
+    <div className="space-y-10">
+      <div>
+        <h1 className="text-left font-bold">Bài 1</h1>
+        <Bai1 />
+      </div>
+
+      <div>
+        <h1 className="text-left font-bold">Bài 2</h1>
+        <Bai2 />
+      </div>
+
+      <div>
+        <h1 className="text-left font-bold">Bài 3</h1>
+        <Bai3 />
+      </div>
+
+      <div>
+        <h1 className="text-left font-bold">Bài 4</h1>
+        <Bai4 />
+      </div>
     </div>
   );
 }
+
+export default Lab3;
