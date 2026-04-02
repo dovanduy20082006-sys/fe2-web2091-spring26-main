@@ -1,6 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { Button, Layout, Input, Form } from "antd";
+import { Button, ConfigProvider} from "antd";
 import { Route, Routes } from "react-router-dom";
 import Lab1 from "./pages/lab1";
 import Lab2 from "./pages/lab2";
@@ -8,42 +8,32 @@ import Lab3 from "./pages/lab3";
 import Lab4 from "./pages/lab4";
 import Lab5 from "./pages/lab5";
 import Lab6 from "./pages/lab6";
+import Navbar from "./components/Header";
+import {theme as antdTheme } from "antd";
+import { ThemeContext } from "./context/ThemeContext";
+import { useContext } from "react";
+import Login from "./pages/login";
+import Register from "./pages/Register";
+
 // const { Header, Content, Footer } = Layout;
 function App() {
   // const onFinish = (values: any) => {
   //   console.log(values);
   // };
+  const context = useContext(ThemeContext);
+  if (!context) return null;
+  const { theme } = context;
   return (
     <>
-      <nav className="bg-blue-600 text-white shadow">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link to="#" className="text-xl font-semibold">
-            <strong>WEB2091 App</strong>
-          </Link>
-
-          <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="hover:text-gray-200">
-              Trang chủ
-            </Link>
-            <Link to="/list" className="hover:text-gray-200">
-              Danh sách
-            </Link>
-            <Link to="/add" className="hover:text-gray-200">
-              Thêm mới
-            </Link>
-          </div>
-
-          <div className="hidden md:flex items-center space-x-6">
-            <Link to="#" className="hover:text-gray-200">
-              Đăng nhập
-            </Link>
-            <Link to="#" className="hover:text-gray-200">
-              Đăng ký
-            </Link>
-          </div>
-        </div>
-      </nav>
-
+      <ConfigProvider
+      theme={{
+        algorithm:
+          theme === "dark"
+            ? antdTheme.darkAlgorithm
+            : antdTheme.defaultAlgorithm,
+      }}>
+      <Navbar/>
+      {/* MAIN CONTENT */}
       <div className="max-w-6xl mx-auto mt-10 px-4 text-center">
         <div className="mb-2">
           <Link to="/lab1">
@@ -95,10 +85,13 @@ function App() {
           <Route path="/lab4" element={<Lab4/>}></Route>
           <Route path="/lab5" element={<Lab5/>}></Route>
           <Route path="/lab6/:id" element={<Lab6 />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
 
       <Toaster />
+      </ConfigProvider>
     </>
   );
 }
